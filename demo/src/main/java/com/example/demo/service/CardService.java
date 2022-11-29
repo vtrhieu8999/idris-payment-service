@@ -18,12 +18,15 @@ import io.vavr.control.Option;
 import io.vavr.control.Try;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Log4j2
@@ -87,19 +90,26 @@ public class CardService {
     }
 
     private Try<List<CardInfo>> encryptPinCodeByBatch(PublicKey publicKey, List<Card> cardList, String transactionId) {
-        return Try.traverse(cardList,
+        return Try.sequence(cardList.parallelStream()
+                        .map(
                         card -> encryptService.encryptMessage(
                                         publicKey,
                                         card.getPinCode()
                                 )
-                                .map(card::setPinCode)
-                                .map(t -> t.setIsAvailable(false)
-                                        .setTransId(transactionId))
+                                .map(
+                                t -> card.setPinCode(t)
+                                        .setIsAvailable(false)
+                                        .setTransId(transactionId)
+                                )
+                        )
+                        .collect(Collectors.toList())
                 )
-                .map(Seq::toJavaList)
-                .mapTry(cardRepo::saveAll)
-                .map(List::stream)
-                .map(str -> str.map(CardInfo::new).collect(Collectors.toList()));
+                .mapTry(
+                seq -> cardRepo.saveAll(seq)
+                        .stream()
+                        .map(CardInfo::new)
+                        .collect(Collectors.toList())
+                );
     }
 
 
