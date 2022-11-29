@@ -1,0 +1,37 @@
+package com.example.demo.config;
+
+public interface ErrorCode {
+    String SUCCESS = "00";
+    String INCORRECT_PARTNER_CODE = "01";
+    String PARTNER_ACCOUNT_IS_NOT_ACTIVATE = "02";
+    String EXCESS_CARD_LIMIT_PER_TRANSACTION = "03";
+    String INCORRECT_PRODUCT_CODE = "04";
+    String INCORRECT_SIGN = "05";
+    String NOT_ENOUGH_BALANCE = "06";
+    String NOT_ENOUGH_CARD = "07";
+    String SUSPECTED_TRANSACTION = "08";
+    String INTERNAL_FIN_SERVICE_ERROR = "09";
+    String EXTERNAL_FIN_SERVICE_ERROR = "10";
+    String NOT_HAVE_AUTHORIZE_TO_ACCESS_SERVICE = "11";
+    String TRANSACTION_NOT_FOUND = "12";
+    String INCORRECT_TRANSACTION_TYPE = "13";
+    String DUPLICATE_TRANSACTION_ID = "15";
+    //Telco TopUp error
+    String TOP_UP_ERROR = "14";
+    String SYSTEM_DURING_MAINTENANCE = "16";
+    String INCORRECT_LOCAL_DATE = "17";
+    String SERVICE_ACCESS_DENIAL = "18";
+    String DUPLICATE_TRACE_NUMBER = "19";
+    String INCORRECT_PHONE_NUMBER = "20";
+    String NOT_ENOUGH_FIN_BALANCE = "21";
+    String SERVICE_NOT_AVAILABLE = "22";
+    String TELCO_SYSTEM_ERROR = "23";
+    String EXCESS_ITEM_LIMIT_PER_TRANSACTION = "24";
+    String DUPLICATE_TOP_UP_COUNTER = "25";
+    //Vinaphone error
+    String PHONE_NUMBER_NOT_HAVE_EZPAY_ACCOUNT = "26";
+    String PHONE_NUMBER_CAN_NOT_ACCESS_TOP_UP_SERVICE = "27";
+    String BILL_CODE_NOT_EXIST = "28";
+    String INVALID_PAY_AMOUNT = "29";
+
+}
